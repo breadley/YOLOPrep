@@ -124,6 +124,16 @@ Copy the projname/projname.sh script into the Darknet root directory, make the D
 ```
 This will create trained weight files in projname/Weights.
 
+## Restarting training
+
+Copy the projname/projname_restart.sh script into the Darknet root directory, make the Darknet root directory the current directory and enter:
+
+```
+./projname_restart.sh
+```
+This will create trained weight files in projname/Weights but starting from the latest backup rather than the darknet53 starting point.
+
+
 
 
 

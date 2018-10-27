@@ -75,13 +75,14 @@ if not os.path.exists(datasetPath):
 cd = getcwd()
 absProjDir = os.path.join(cd, projName)
 trainDataPath = os.path.join(absProjDir, projName + '.data')
+weightsPath = os.path.join(absProjDir, 'Weights')
 
 file_data = open(trainDataPath, 'w')  
 file_data.write('classes={}\n'.format(classCount))
 file_data.write('train={}\n'.format(os.path.join(absProjDir, 'train.txt')))
 file_data.write('valid={}\n'.format(os.path.join(absProjDir, 'test.txt')))
 file_data.write('names={}\n'.format(os.path.join(absProjDir, projName + '.names')))
-file_data.write('backup={}\n'.format(os.path.join(absProjDir, 'Weights')))
+file_data.write('backup={}\n'.format(weightsPath))
 file_data.close()
 
 # create train.sh file
@@ -90,6 +91,16 @@ trainScriptPath = os.path.join(absProjDir, projName + '.sh')
 
 file_data = open(trainScriptPath, 'w')  
 file_data.write('./darknet detector train {} {} darknet53.conv.74'.format(trainDataPath, os.path.join(absProjDir, projName + '.cfg')))
+file_data.close()
+os.chmod(trainScriptPath, 0777)
+
+# create train_restart.sh file
+
+trainScriptPath = os.path.join(absProjDir, projName + '_restart.sh')
+
+file_data = open(trainScriptPath, 'w')  
+file_data.write('cp {} restart.weights\n'.format(os.path.join(weightsPath, projName + '.backup')))
+file_data.write('./darknet detector train {} {} restart.weights\n'.format(trainDataPath, os.path.join(absProjDir, projName + '.cfg')))
 file_data.close()
 os.chmod(trainScriptPath, 0777)
 

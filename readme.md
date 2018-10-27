@@ -12,7 +12,7 @@ Get the darknet53 model from https://pjreddie.com/media/files/darknet53.conv.74.
 
 ## Prepare the directory
 
-Go to a suitable root folder for the training data. Copy prepare.py, bbox.py and convert.py into it. Then set that as the working directory and execute:
+Go to a suitable root directory for the training data. Copy prepare.py, bbox.py convert.py and imageprep.sh into it. Then set that as the working directory and execute:
 
 ```
 python prepare.py projname classcount
@@ -76,14 +76,16 @@ would be the contents if class 0 is left_controller and class 1 is right control
 
 ## Image preparation
 
+*** Note: imageprep.sh uses the mogrify command which modifies images in place and makes irreversible changes. Please ensure that you understand its operation before use ***
+
 The image files have to be of reasonable size (say 1024 pixels wide x 720 high) and with a .jpg extension. If not, there is a utility script called imageprep.sh that can be used to fix this. It is set up for a Sony RX100 but that can be changed of course.
 
-Initially, copy all images for a class (keep backups!) into a temporary folder Temp in the root directory. Assuming they are from the Sony, run:
+Initially, copy all images for a class (keep backups!) into a temporary folder Temp in the root directory. Then run this from the root directory:
 
 ```
 ./imageprep.sh 
 ```
-in the root directory. This resizes the images to 1024 pixels wide and changes the extensions to .jpg. Now copy the images to the appropriate folder for the class (e.g Images/0 for class 0). Do this for all classes.
+in the root directory. This resizes the images to 1024 pixels wide and changes the extensions to .jpg from .JPG. Now copy the modified images to the appropriate folder for the class (e.g Images/0 for class 0). Do this for all classes.
 
 ## Bounding box generation
 

@@ -12,7 +12,7 @@ Get the darknet53 model from https://pjreddie.com/media/files/darknet53.conv.74.
 
 ## Prepare the directory
 
-Go to a suitable root directory for the training data. Copy prepare.py, bbox.py convert.py and imageprep.sh into it. Then set that as the working directory and execute:
+Go to a suitable root directory for the training data. Copy prepare.py, bbox.py convert.py, gen_anchors.py and imageprep.sh into it. Then set that as the working directory and execute:
 
 ```
 python prepare.py projname classcount
@@ -105,6 +105,15 @@ python convert.py projname
 ```
 
 This populates the projname/Dataset directory and also creates the other files needed for training.
+
+## Update anchors in projname.cfg
+
+To get better accuracy, it is a good idea to calculate new anchors from the training data. To do this, run this in the root directory:
+
+```
+python gen_anchors.py testproj
+```
+This generates a file projname/anchors9.txt. The first line of this contains the coordinates of the new anchors. Update the projname.cfg file by replacing the anchors at lines 609, 695 and 782.
 
 ## Training
 
